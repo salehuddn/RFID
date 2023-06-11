@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Attendance</title>
     <link rel="stylesheet" href="style.css" />
 
-    
-  </head>
 
-  <body>
+</head>
+
+<body>
     <header>
-        <h2 class="logo" >eAttend</h2>
-        
+        <h2 class="logo">eAttend</h2>
+
         <nav class="navigation">
             <a href="#">Home</a>
             <a href="#">About</a>
@@ -45,48 +46,99 @@
                     <label><input type="checkbox">Remember Me</label>
                     <a href="#">Forgot Password?</a>
                 </div>
-            <button type="submit" class="btn">Login</button>
-            <div class="login-register">
-                <p>Don't have an account? <a href="#" class="register-link">Register</a></p>
-            </div>
+                <button type="submit" class="btn">Login</button>
+                <div class="login-register">
+                    <p>Don't have an account? <a href="#" class="register-link">Register</a></p>
+                </div>
             </form>
         </div>
 
         <div class="form-box register">
             <h2>Registration</h2>
-            <form action="#">
-
+            <form id="registration-form">
                 <div class="input-box">
                     <span class="icon"><ion-icon name="person"></ion-icon></span>
-                    <input type="text" required>
-                    <label>Username</label>
+                    <input type="text" id="name" required>
+                    <label>Name</label>
                 </div>
 
                 <div class="input-box">
                     <span class="icon"><ion-icon name="mail"></ion-icon></span>
-                    <input type="email" required>
+                    <input type="email" id="email" required>
                     <label>Email</label>
                 </div>
+
                 <div class="input-box">
                     <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
-                    <input type="password" required>
+                    <input type="password" id="password" required>
                     <label>Password</label>
                 </div>
+
                 <div class="remember-forgot">
-                    <label><input type="checkbox">I agree to the terms & conditions</label>
-                    
+                    <label><input type="checkbox" id="terms-checkbox">I agree to the terms & conditions</label>
                 </div>
-            <button type="submit" class="btn">Register</button>
-            <div class="login-register">
-                <p>Already have an account? <a href="#" class="login-link">Login</a></p>
-            </div>
+
+                <button type="submit" class="btn">Register</button>
+
+                <div class="login-register">
+                    <p>Already have an account? <a href="#" class="login-link">Login</a></p>
+                </div>
             </form>
         </div>
     </div>
 
+    <script>
+        document.getElementById("registration-form").addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Get form values
+            let name = document.getElementById("name").value;
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+            let termsCheckbox = document.getElementById("terms-checkbox");
+
+            // Check if terms checkbox is checked
+            if (!termsCheckbox.checked) {
+                alert("Please agree to the terms & conditions.");
+                return;
+            }
+
+            // Prepare the URL with query parameters
+            let url = "https://api.salehuddin.tech/api/users";
+            url += "?name=" + encodeURIComponent(name);
+            url += "&email=" + encodeURIComponent(email);
+            url += "&password=" + encodeURIComponent(password);
+
+
+            // Make the API request
+            fetch(url, {
+                method: 'POST' // Specify the request method as POST
+            })
+                .then(function (response) {
+                    if (response.status === 201) {
+                        // Registration successful
+                        // Redirect to dashboard.html
+                        // window.location.href = "dashboard.html";
+
+                        alert("Registration successful. Please login.");
+                    } else {
+                        // Registration failed
+                        response.json().then(function (data) {
+                            alert("Registration failed: " + data.message);
+                        });
+                    }
+                })
+                .catch(function (error) {
+                    // Error occurred
+                    console.error(error);
+                    alert("An error occurred. Please try again later.");
+                });
+        });
+    </script>
 
     <script src="script.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-  </body>
+</body>
+
 </html>
