@@ -31,19 +31,19 @@
 
         <div class="form-box login">
             <h2>Login</h2>
-            <form action="#">
+            <form id="login-form">
                 <div class="input-box">
                     <span class="icon"><ion-icon name="mail"></ion-icon></span>
-                    <input type="email" required>
+                    <input type="email" id="email" required>
                     <label>Email</label>
                 </div>
                 <div class="input-box">
                     <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
-                    <input type="password" required>
+                    <input type="password" id="password" required>
                     <label>Password</label>
                 </div>
                 <div class="remember-forgot">
-                    <label><input type="checkbox">Remember Me</label>
+                    <label><input type="checkbox" id="remember-checkbox">Remember Me</label>
                     <a href="#">Forgot Password?</a>
                 </div>
                 <button type="submit" class="btn">Login</button>
@@ -88,6 +88,46 @@
     </div>
 
     <script>
+        // Login
+        document.getElementById("login-form").addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Get form values
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+            let rememberCheckbox = document.getElementById("remember-checkbox");
+
+            // Prepare the URL with query parameters
+            let url = "https://api.salehuddin.tech/api/authenticate";
+            url += "?email=" + encodeURIComponent(email);
+            url += "&password=" + encodeURIComponent(password);
+
+            // Make the API request
+            fetch(url, {
+                method: 'POST' // Specify the request method as POST
+            })
+                .then(function (response) {
+                    if (response.ok) {
+                        // Authentication successful
+                        // Redirect to dashboard.html
+                        response.json().then(function (data) {
+                            // Store the token in localStorage for future use
+                            localStorage.setItem('token', data.token);
+                            window.location.href = "dashboard.html";
+                        });
+                    } else {
+                        // Authentication failed
+                        alert("Login failed. Please check your credentials.");
+                    }
+                })
+                .catch(function (error) {
+                    // Error occurred
+                    console.error(error);
+                    alert("An error occurred. Please try again later.");
+                });
+        });
+
+        // Register
         document.getElementById("registration-form").addEventListener("submit", function (event) {
             event.preventDefault(); // Prevent form submission
 
