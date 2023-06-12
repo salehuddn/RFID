@@ -5,32 +5,20 @@ const btnPopup = document.querySelector('.btnLogin-popup');
 const iconClose = document.querySelector('.icon-close');
 
 registerLink.addEventListener('click', ()=>{
-
     wrapper.classList.add('active');
-
-
 })
 
 
 loginLink.addEventListener('click', ()=>{
-
     wrapper.classList.remove('active');
-
-
 })
 
 btnPopup.addEventListener('click', ()=>{
-
     wrapper.classList.add('active-popup');
-
-
 })
 
 iconClose.addEventListener('click', ()=>{
-
     wrapper.classList.remove('active-popup');
-
-
 })
 
 // Login
@@ -52,13 +40,14 @@ document.getElementById("login-form").addEventListener("submit", function (event
         method: 'POST' // Specify the request method as POST
     })
         .then(function (response) {
-            if (response.ok) {
+            if (response.status === 200) {
                 // Authentication successful
                 // Redirect to dashboard.html
                 response.json().then(function (data) {
                     // Store the token in localStorage for future use
                     localStorage.setItem('token', data.token);
                     window.location.href = "dashboard.html";
+                    alert("You have logged in successfully.");
                 });
             } else {
                 // Authentication failed
@@ -119,3 +108,56 @@ document.getElementById("registration-form").addEventListener("submit", function
             alert("An error occurred. Please try again later.");
         });
 });
+
+
+// Logout
+function logout() {
+    // Remove the token from localStorage
+    localStorage.removeItem('token');
+
+    // Redirect to the login page
+    window.location.href = "index.html";
+    alert("You have logged out successfully.");
+}
+
+
+// Get all users
+function fetchUsers() {
+    fetch('https://api.salehuddin.tech/api/users')
+        .then(response => response.json())
+        .then(data => {
+            const tableBody = document.querySelector('#user-table tbody');
+            tableBody.innerHTML = ''; // Clear previous table rows
+
+            data.forEach((user, index) => {
+                const row = document.createElement('tr');
+                const indexCell = document.createElement('th');
+                indexCell.classList.add('text-center');
+                indexCell.scope = 'row';
+                indexCell.textContent = index + 1;
+                row.appendChild(indexCell);
+
+                const nameCell = document.createElement('td');
+                nameCell.textContent = user.name;
+                row.appendChild(nameCell);
+
+                const emailCell = document.createElement('td');
+                emailCell.textContent = user.email;
+                row.appendChild(emailCell);
+
+                const createdAtCell = document.createElement('td');
+                const createdAt = new Date(user.created_at);
+                const options = { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
+                createdAtCell.textContent = createdAt.toLocaleString('en-MS', options).replace(/(am|pm)/i, match => match.toUpperCase()); // Format date
+                row.appendChild(createdAtCell);
+
+                tableBody.appendChild(row);
+            });
+        })
+        .catch(error => {
+            console.error(error);
+            alert('Failed to fetch user data.');
+        });
+}
+
+
