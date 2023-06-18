@@ -78,7 +78,7 @@ document.getElementById("registration-form").addEventListener("submit", function
     }
 
     // Prepare the URL with query parameters
-    let url = "https://api.salehuddin.tech/api/users";
+    let url = "https://api.salehuddin.tech/api/user/register";
     url += "?name=" + encodeURIComponent(name);
     url += "&email=" + encodeURIComponent(email);
     url += "&password=" + encodeURIComponent(password);
