@@ -66,9 +66,9 @@ document.getElementById("registration-form").addEventListener("submit", function
     event.preventDefault(); // Prevent form submission
 
     // Get form values
-    let name = document.getElementById("name").value;
-    let email = document.getElementById("email").value;
-    let password = document.getElementById("password").value;
+    let name = document.getElementById("userName").value;
+    let email = document.getElementById("userEmail").value;
+    let password = document.getElementById("userPassword").value;
     let termsCheckbox = document.getElementById("terms-checkbox");
 
     // Check if terms checkbox is checked
