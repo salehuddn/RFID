@@ -78,11 +78,10 @@ document.getElementById("registration-form").addEventListener("submit", function
     }
 
     // Prepare the URL with query parameters
-    let url = "https://api.salehuddin.tech/api/user/register";
-    url += "?name=" + encodeURIComponent(name);
-    url += "&email=" + encodeURIComponent(email);
-    url += "&password=" + encodeURIComponent(password);
-
+    let url = new URL("https://api.salehuddin.tech/api/user/register");
+    url.searchParams.append("name", name);
+    url.searchParams.append("email", email);
+    url.searchParams.append("password", password);
 
     // Make the API request
     fetch(url, {
@@ -108,6 +107,7 @@ document.getElementById("registration-form").addEventListener("submit", function
             alert("An error occurred. Please try again later.");
         });
 });
+
 
 
 // Logout
