@@ -46,7 +46,7 @@ document.getElementById("login-form").addEventListener("submit", function (event
                 response.json().then(function (data) {
                     // Store the token in localStorage for future use
                     localStorage.setItem('token', data.token);
-                    window.location.href = "dashboard.html";
+                    window.location.href = "admins.html";
                     alert("You have logged in successfully.");
                 });
             } else {
@@ -150,6 +150,18 @@ function fetchUsers() {
                 const options = { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
                 createdAtCell.textContent = createdAt.toLocaleString('en-MS', options).replace(/(am|pm)/i, match => match.toUpperCase()); // Format date
                 row.appendChild(createdAtCell);
+
+                const deleteCell = document.createElement('td');
+const deleteButton = document.createElement('button');
+deleteButton.classList.add('btn', 'btn-danger', 'btn-sm'); // Add Bootstrap classes for button styling
+deleteButton.innerHTML = '<ion-icon name="trash-outline"></ion-icon>';
+deleteButton.addEventListener('click', function() {
+  // Handle delete action here
+  // Perform the necessary actions to delete the data from the database
+});
+deleteCell.appendChild(deleteButton);
+row.appendChild(deleteCell);
+
 
                 tableBody.appendChild(row);
             });
