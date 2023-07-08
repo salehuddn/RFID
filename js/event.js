@@ -125,7 +125,7 @@ function showEvent() {
     .then(response => response.json())
     .then(event => {
         console.log(event);
-        document.getElementById('eventName').value = user.event;
+        document.getElementById('eventName').value = event.name;
     })
     .catch(error => {
         console.error(error);
