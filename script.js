@@ -78,7 +78,7 @@ document.getElementById("registration-form").addEventListener("submit", function
     }
 
     // Prepare the URL with query parameters
-    let url = new URL("https://api.salehuddin.tech/api/user/register");
+    let url = new URL("https://api.salehuddin.tech/api/admin/register");
     url.searchParams.append("name", name);
     url.searchParams.append("email", email);
     url.searchParams.append("password", password);
@@ -123,7 +123,7 @@ function logout() {
 
 // Get all users
 function fetchUsers() {
-    fetch('https://api.salehuddin.tech/api/users')
+    fetch('https://api.salehuddin.tech/api/admin')
         .then(response => response.json())
         .then(data => {
             const tableBody = document.querySelector('#user-table tbody');
