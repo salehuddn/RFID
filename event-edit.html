@@ -77,7 +77,9 @@
       showEvent();
       document.getElementById("updateEvent-form").addEventListener("submit", function (event) {
         event.preventDefault();
-        updateEvent();
+        const urlParams = new URLSearchParams(window.location.search);
+        const eventId = urlParams.get('id');
+        updateEvent(eventId);
       });
     });
   </script>

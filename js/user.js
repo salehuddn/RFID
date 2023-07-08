@@ -144,7 +144,7 @@ function updateUser() {
   let uid = document.getElementById("userUid").value;
 
   // Prepare the URL with query parameters
-  let url = new URL("https://api.salehuddin.tech/api/user/store");
+  let url = new URL(`https://api.salehuddin.tech/api/user/${userId}`);
   url.searchParams.append("name", name);
   url.searchParams.append("uid", uid);
 

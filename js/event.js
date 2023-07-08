@@ -134,10 +134,10 @@ function showEvent() {
 }
 
 // Update Event
-function updateEvent() {
-    let name = document.getElementById("userName").value;
+function updateEvent(eventId) {
+    let name = document.getElementById("eventName").value;
   
-    let url = new URL("https://api.salehuddin.tech/api/event/store");
+    let url = new URL(`https://api.salehuddin.tech/api/event/${eventId}`);
     url.searchParams.append("name", name);
   
     fetch(url, {
@@ -146,7 +146,7 @@ function updateEvent() {
         .then(function (response) {
         if (response.ok) {
             alert("Event updated successfully.");
-            window.location.href = "users.html";
+            window.location.href = "event.html";
         } else {
             response.json().then(function (data) {
             alert("Event update failed: " + data.message);
@@ -157,4 +157,4 @@ function updateEvent() {
         console.error(error);
         alert("An error occurred. Please try again later.");
         });
-  }
+}
