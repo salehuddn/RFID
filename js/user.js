@@ -138,7 +138,7 @@ function showUser() {
 }
 
 // Update User
-function updateUser() {
+function updateUser(userId) {
   // Get form values
   let name = document.getElementById("userName").value;
   let uid = document.getElementById("userUid").value;

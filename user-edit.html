@@ -81,7 +81,9 @@
       showUser();
       document.getElementById("updateUser-form").addEventListener("submit", function (event) {
         event.preventDefault();
-        updateUser();
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get('uid');
+        updateUser(userId);
       });
     });
   </script>
