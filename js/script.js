@@ -120,9 +120,8 @@ function logout() {
     alert("You have logged out successfully.");
 }
 
-
 // Get all users
-function fetchUsers() {
+function fetchAdmins() {
     fetch('https://api.salehuddin.tech/api/admin')
         .then(response => response.json())
         .then(data => {
@@ -152,15 +151,36 @@ function fetchUsers() {
                 row.appendChild(createdAtCell);
 
                 const deleteCell = document.createElement('td');
-const deleteButton = document.createElement('button');
-deleteButton.classList.add('btn', 'btn-danger', 'btn-sm'); // Add Bootstrap classes for button styling
-deleteButton.innerHTML = '<ion-icon name="trash-outline"></ion-icon>';
-deleteButton.addEventListener('click', function() {
-  // Handle delete action here
-  // Perform the necessary actions to delete the data from the database
-});
-deleteCell.appendChild(deleteButton);
-row.appendChild(deleteCell);
+                const deleteButton = document.createElement('button');
+                deleteButton.classList.add('btn', 'btn-danger', 'btn-sm'); // Add Bootstrap classes for button styling
+                deleteButton.innerHTML = '<ion-icon name="trash-outline"></ion-icon>';
+                deleteButton.addEventListener('click', function() {
+                    const confirmDelete = confirm('Are you sure you want to delete this admin?');
+                    if (confirmDelete) {
+                        const adminId = user.id;
+                        const deleteUrl = `https://api.salehuddin.tech/api/admin/${adminId}`;
+                
+                        fetch(deleteUrl, {
+                            method: 'DELETE'
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                // Successful deletion
+                                // Perform any necessary actions (e.g., removing the row from the table)
+                                fetchAdmins(); // Refresh the table after successful deletion
+                            } else {
+                                // Error occurred during deletion
+                                throw new Error('Failed to delete admin.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error(error);
+                            alert('Failed to delete admin.');
+                        });
+                    }
+                });
+                deleteCell.appendChild(deleteButton);
+                row.appendChild(deleteCell);
 
 
                 tableBody.appendChild(row);
@@ -171,5 +191,3 @@ row.appendChild(deleteCell);
             alert('Failed to fetch user data.');
         });
 }
-
-
